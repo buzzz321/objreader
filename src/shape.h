@@ -8,7 +8,7 @@
 
 struct Shape {
     std::string name;
-    std::vector<glm::vec4> vertecies;
+    std::vector<glm::vec4> vertices;
     std::vector<glm::vec4> normals;
     std::vector<int> faces;    
 };

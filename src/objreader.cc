@@ -47,6 +47,9 @@ Shape ObjReader::ReadShape() {
         if (token.compare("o") == 0) {
             shape.name = GetObjName( ss );
         }
+        if (token.compare("v") == 0) {
+            shape.vertices.push_back( GetVertex( ss ));
+        }
     }
     
     return shape;
@@ -57,4 +60,13 @@ std::string ObjReader::GetObjName ( stringstream &ss ) {
     getline(ss, retval);
 
     return trim(retval);
+}
+
+glm::vec4 ObjReader::GetVertex( stringstream &ss ) {
+    glm::vec4 retval;
+
+    ss >> retval.x >> retval.y >> retval.z;
+    retval.w = 0.0;
+
+    return retval;
 }
