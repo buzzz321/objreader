@@ -19,6 +19,7 @@ ObjReader(std::string file_name)
     Shape ReadShape();
     std::string GetObjName( std::stringstream &ss );
     glm::vec4 GetVertex( std::stringstream &ss );
+    glm::vec4 GetNormal( std::stringstream &ss );
     Face GetFace( std::stringstream &ss );
     
 private:

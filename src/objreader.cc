@@ -50,6 +50,10 @@ Shape ObjReader::ReadShape() {
         if (token.compare("v") == 0) {
             shape.vertices.push_back( GetVertex( ss ));
         }
+        if (token.compare("vn") == 0) {
+            shape.normals.push_back( GetNormal( ss ));
+        }
+
         if (token.compare("f") == 0) {
             do {
                 if ( ss.peek() != -1 ){
@@ -78,6 +82,16 @@ glm::vec4 ObjReader::GetVertex( stringstream &ss ) {
 
     return retval;
 }
+
+glm::vec4 ObjReader::GetNormal( stringstream &ss ) {
+    glm::vec4 retval;
+
+    ss >> retval.x >> retval.y >> retval.z;
+    retval.w = 0.0;
+
+    return retval;
+}
+
 
 Face ObjReader::GetFace( stringstream &ss ) {
     Face face;

@@ -57,6 +57,33 @@ TEST(ObjReader_getvertex_t1, GetVertex) {
     EXPECT_EQ(expected.w, sp.vertices[0].w);      
 }
 
+TEST(shape_getnormal_t1, GetNormal) {
+    ObjReader uat("../test1_wavefront.obj");
+    string data("1.0 2.0 3.0");
+    glm::vec4 expected( 1.0,2.0,3.0,0.0 );
+    
+    stringstream ss(data);
+    
+    glm::vec4 result = uat.GetNormal(ss) ;
+    EXPECT_EQ(expected.x, result.x);
+    EXPECT_EQ(expected.y, result.y);
+    EXPECT_EQ(expected.z, result.z);
+    EXPECT_EQ(expected.w, result.w);
+}
+
+TEST(ObjReader_getnormal_t1, GetNormal) {
+    ObjReader uat("../test1_wavefront.obj");
+    glm::vec4 expected( 0.0, -1.0, 0.0, 0.0 );
+    
+    Shape sp = uat.ReadShape();
+    //could be fatal to compare doubles like this.. Fragile test :(
+    EXPECT_EQ(expected.x, sp.normals[0].x);
+    EXPECT_EQ(expected.y, sp.normals[0].y);
+    EXPECT_EQ(expected.z, sp.normals[0].z);
+    EXPECT_EQ(expected.w, sp.normals[0].w);      
+}
+
+
 TEST(ObjReader_getface_two_numbers, GetFace) {
     ObjReader uat("../test1_wavefront.obj");
     string data("1//2");
