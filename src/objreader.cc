@@ -50,6 +50,14 @@ Shape ObjReader::ReadShape() {
         if (token.compare("v") == 0) {
             shape.vertices.push_back( GetVertex( ss ));
         }
+        if (token.compare("f") == 0) {
+            do {
+                if ( ss.peek() != -1 ){
+                    shape.faces.push_back( GetFace( ss) );
+                }
+            } while (ss);
+        }
+
     }
     
     return shape;
@@ -70,3 +78,39 @@ glm::vec4 ObjReader::GetVertex( stringstream &ss ) {
 
     return retval;
 }
+
+Face ObjReader::GetFace( stringstream &ss ) {
+    Face face;
+    //string split code from cplusplus faq
+    string delimiters = "/";
+    string result;
+    string line;
+    size_t current;
+    size_t next = -1;
+    size_t index = 0;
+
+    ss >> line;
+    do
+    {
+        current = next + 1;
+        next = line.find_first_of( delimiters, current );
+        result = line.substr( current, next - current ); 
+        if (result.compare("") != 0){
+            switch (index){
+            case 0: face.vertexno = stoi(result);
+                break;
+            case 1: face.materialno = stoi(result);
+                break;
+            case 2: face.normalno = stoi(result);
+                break;
+            default:
+                cerr << "too many faces " << endl;
+            }
+        }
+        index++;
+    }
+    while (next != string::npos);
+
+    return face;
+}
+

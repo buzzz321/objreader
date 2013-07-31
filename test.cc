@@ -56,3 +56,50 @@ TEST(ObjReader_getvertex_t1, GetVertex) {
     EXPECT_EQ(expected.z, sp.vertices[0].z);
     EXPECT_EQ(expected.w, sp.vertices[0].w);      
 }
+
+TEST(ObjReader_getface_two_numbers, GetFace) {
+    ObjReader uat("../test1_wavefront.obj");
+    string data("1//2");
+    stringstream ss(data);
+
+    Face expected;
+    expected.vertexno = 1;
+    expected.materialno = 0;
+    expected.normalno = 2;
+    
+    Face result = uat.GetFace(ss);
+
+    EXPECT_EQ(expected.vertexno, result.vertexno);
+    EXPECT_EQ(expected.materialno, result.materialno);
+    EXPECT_EQ(expected.normalno, result.normalno); 
+}
+
+TEST(ObjReader_getface_one_numbers, GetFace) {
+    ObjReader uat("../test1_wavefront.obj");
+    string data("1");
+    stringstream ss(data);
+
+    Face expected;
+    expected.vertexno = 1;
+    expected.materialno = 0;
+    expected.normalno = 0;
+        
+    Face result = uat.GetFace(ss);
+    EXPECT_EQ(expected.vertexno, result.vertexno);
+    EXPECT_EQ(expected.materialno, result.materialno);
+    EXPECT_EQ(expected.normalno, result.normalno); 
+}
+
+TEST(shape_getface_three_numbers, GetFace) {
+    ObjReader uat("../test1_wavefront.obj");
+    Face expected;
+    expected.vertexno = 1;
+    expected.materialno = 0;
+    expected.normalno = 1;
+        
+    Shape sp = uat.ReadShape();
+
+    EXPECT_EQ(expected.vertexno, sp.faces[0].vertexno);
+    EXPECT_EQ(expected.materialno, sp.faces[0].materialno);
+    EXPECT_EQ(expected.normalno, sp.faces[0].normalno); 
+}
